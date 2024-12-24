@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu hỏi trắc nghiệm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question-container {
+            display: none;
+        }
+        .question-container.active {
+            display: block;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .answer {
+            margin: 10px 0;
+        }
+        .answer button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .answer button:hover {
+            background-color: #ddd;
+        }
+        .answer button.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .answer button.incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Câu hỏi trắc nghiệm về số nguyên tố?</h1>
+
+                <!-- Câu hỏi 1 -->
+                <div class="question-container active" id="question-1">
+                    <div class="question">Số nguyên tố được sử dụng bằng hàm nào?</div>
+                    <div class="answers">
+                        <div class="answer">
+                            <button onclick="checkAnswer(this, true, 'question-1')">A. bool</button>
+                        </div>
+                        <div class="answer">
+                            <button onclick="checkAnswer(this, false, 'question-1')">B. int</button>
+                        </div>
+                        <div class="answer">
+                            <button onclick="checkAnswer(this, false, 'question-1')">C. string</button>
+                        </div>
+                        <div class="answer">
+                            <button onclick="checkAnswer(this, false, 'question-1')">D. void</button>
+                        </div>
+                    </div>
+                </div>
+
+        <!-- Câu hỏi 2 -->
+        <div class="question-container" id="question-2">
+            <div class="question">Dấu hiệu nhận biết?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">A. return 1 đúng 2 sai</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">B. return 2 đúng 1 sai</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">C. return 2 sai 1 đúng</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-2')">D. reuturn 1 đúng 0 sai</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Câu hỏi 3 -->
+        <div class="question-container" id="question-3">
+            <div class="question">Công thức vòng lặp for của số nguyên tố?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-3')">A. for (int i = 2; i <= sqrt(n); i++)</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">B. for (int i = 2; i <= n; i++)</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">C. for (int i = 0; i <= sqrt(n); i++)</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">D. for (int i = 1; i <= sqrt(n); i++)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button, isCorrect, questionId) {
+            const buttons = document.querySelectorAll(`#${questionId} .answer button`);
+            buttons.forEach(btn => btn.disabled = true); // Disable all buttons after answering
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                alert("Chính xác! Đây là đáp án đúng.");
+            } else {
+                button.classList.add('incorrect');
+                alert("Sai rồi! Hãy thử lại.");
+            }
+
+            // Chuyển sang câu hỏi tiếp theo sau 1 giây
+            setTimeout(() => {
+                const currentQuestion = document.getElementById(questionId);
+                currentQuestion.classList.remove('active'); // Ẩn câu hỏi hiện tại
+
+                const nextQuestion = currentQuestion.nextElementSibling;
+                if (nextQuestion && nextQuestion.classList.contains('question-container')) {
+                    nextQuestion.classList.add('active'); // Hiển thị câu hỏi tiếp theo
+                } else {
+                    alert("Bạn đã hoàn thành tất cả câu hỏi!");
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
