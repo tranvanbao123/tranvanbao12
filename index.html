@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu hỏi trắc nghiệm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question-container {
+            display: none;
+        }
+        .question-container.active {
+            display: block;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .answer {
+            margin: 10px 0;
+        }
+        .answer button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .answer button:hover {
+            background-color: #ddd;
+        }
+        .answer button.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .answer button.incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Câu hỏi trắc nghiệm về số đối sứng</h1>
+
+        <!-- Câu hỏi 1 -->
+        <div class="question-container active" id="question-1">
+            <div class="question">Số đối sứng làm bằng hàm gì?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-1')">A. Bool</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-1')">B. String</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-1')">C. Void</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-1')">D. Int</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Câu hỏi 2 -->
+        <div class="question-container" id="question-2">
+            <div class="question">Dấu hiệu nhận biết số đối sứng?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">A. Làm tương tự như số nguyên tố</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-2')">B. Làm tương tự như số đảo ngược</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">C. Làm tương tự như số lớn nhất</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-2')">D. Làm tương tự như số bé nhất</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Câu hỏi 3 -->
+        <div class="question-container" id="question-3">
+            <div class="question">Có những gì cần lưu ý để thêm vào?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-3')">A. int n1 = n;</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">B. int n1 == n;</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">C. int n1 : n; </button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-3')">D. int n1 -> n;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Câu hỏi 4 -->
+        <div class="question-container" id="question-4">
+            <div class="question">Cần thêm đoạn code nào vào?</div>
+            <div class="answers">
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-4')">A. return n1 = sodaonguoc;</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-4')">B. return n1 === sodaonguoc;</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, true, 'question-4')">C. return n1 == sodaonguoc;</button>
+                </div>
+                <div class="answer">
+                    <button onclick="checkAnswer(this, false, 'question-4')">D. return n1 != sodaonguoc;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button, isCorrect, questionId) {
+            const buttons = document.querySelectorAll(`#${questionId} .answer button`);
+            buttons.forEach(btn => btn.disabled = true); // Disable all buttons after answering
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                alert("Chính xác! Đây là đáp án đúng.");
+            } else {
+                button.classList.add('incorrect');
+                alert("Sai rồi! Hãy thử lại.");
+            }
+
+            // Chuyển sang câu hỏi tiếp theo sau 1 giây
+            setTimeout(() => {
+                const currentQuestion = document.getElementById(questionId);
+                currentQuestion.classList.remove('active'); // Ẩn câu hỏi hiện tại
+
+                const nextQuestion = currentQuestion.nextElementSibling;
+                if (nextQuestion && nextQuestion.classList.contains('question-container')) {
+                    nextQuestion.classList.add('active'); // Hiển thị câu hỏi tiếp theo
+                } else {
+                    alert("Bạn đã hoàn thành tất cả câu hỏi!");
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
